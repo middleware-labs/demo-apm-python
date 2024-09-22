@@ -1,0 +1,4 @@
+middleware-apm==1.2.1
+flask==3.0.3
+flask_cors==5.0.0
+elasticsearch==8.15.1
