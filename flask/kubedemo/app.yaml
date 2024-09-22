@@ -1,0 +1,45 @@
+# kubectl apply -f app.yaml
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mw-kube-apm-python
+  namespace: python-demo
+spec:
+  selector:
+    matchLabels:
+      app: mw-kube-apm-python
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: mw-kube-apm-python
+        k8s-app: mw-kube-apm-python
+    spec:
+      containers:
+        - command: ["/bin/sh"]
+          args: ["-c", "middleware-apm run python app.py"]
+          env:
+            - name: MW_SERVICE_NAME
+              value: "test-python-k8s"
+            - name: MW_AGENT_SERVICE
+              value: mw-service.mw-agent-ns.svc.cluster.local
+            # - name: MIDDLEWARE_CONFIG_FILE
+            #   value: ./middleware.ini
+            - name: MW_API_KEY
+              value: ycppepesamhvpjnqurnzvspodshhxhkmkgqd
+            - name: MW_DEBUG_LOG_FILE
+              value: "true"
+            - name: MW_CONSOLE_EXPORTER
+              value: "true"
+            - name: MW_TARGET
+              value: "https://<uid>.middleware.io:443"
+          #   - name: MYSQL_HOST
+          #     value: "mysql.mw-agent-ns-fktzp.svc.cluster.local"
+          image: ghcr.io/middleware-labs/demo-apm-python-v2:latest
+          imagePullPolicy: Always
+          name: mw-kube-agent
+          resources: {}
+          ports:
+          - containerPort: 8010
+      restartPolicy: Always

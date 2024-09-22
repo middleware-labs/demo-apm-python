@@ -1,0 +1,57 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elasticsearch Search App</title>
+    <script src="https://cdnjs.middleware.io/browser/libs/0.0.1/middleware-rum.min.js" type="text/javascript"></script>
+
+<script>
+  const url = "{{ target }}";
+  const key = "{{ account_key }}";
+  if (window.Middleware){
+    Middleware.track({
+      serviceName:"Elastic-Frontend",
+      projectName:"Elastic-Frontend",
+      accountKey: key,
+      target: url,
+      defaultAttributes: {
+        "app.version": "1.0.0",
+      },
+      tracePropagationTargets: [/localhost:4000/i],
+    })
+  }
+</script>
+<script>
+  function checkHealth() {
+    fetch("http://localhost:4000/health",{method:"GET"})
+      .then((response) => response.text())
+      .then((data) => {
+        alert("Health check response: " + data);
+      })
+      .catch((error) => {
+        alert("Error: " + error);
+      });
+  }
+  </script>
+</head>
+<body>
+    <h1>Elasticsearch Search App</h1>
+    <button onclick="checkHealth()">Check Health</button>
+    <form method="post">
+        <input type="text" name="query" placeholder="Enter your search query" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if query %}
+        <h2>Results for "{{ query }}":</h2>
+        <ul>
+            {% for result in results %}
+                <li>{{ result['_source']['content'] }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
