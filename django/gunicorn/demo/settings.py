@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'demo.middleware.RequestTimingMiddleware',
 ]
 
 ROOT_URLCONF = 'demo.urls'
@@ -121,3 +122,34 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import logging.config
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "json": {
+            "format": (
+                '{"lvl": "%(levelname)s", "msg": "%(message)s", '
+                '"time": "%(asctime)s", "loc": "%(pathname)s:%(lineno)d", '
+                '"timing_data": "%(timing_data)s", "req_path": "%(req_path)s", '
+                '"req_method": "%(req_method)s", "user_id": "%(user_id)s", '
+                '"txn_id": "%(txn_id)s"}'
+            )
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "json",
+        }
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
+        }
+    },
+}
