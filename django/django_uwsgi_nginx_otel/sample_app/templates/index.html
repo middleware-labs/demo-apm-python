@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Page</title>
+</head>
+<body>
+    <h1>Welcome to the Django Sample App</h1>
+    <button onclick="fetchAPI()">Call API</button>
+    <p id="api-response"></p>
+
+    <script>
+        async function fetchAPI() {
+            const response = await fetch('/api/');
+            const data = await response.json();
+            document.getElementById('api-response').textContent = data.message;
+        }
+    </script>
+</body>
+</html>
