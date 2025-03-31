@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Flask with middleware-run",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "${workspaceFolder}/flask/flaskenv/bin/flask",
+        "args": [
+          "run",
+          "--no-reload"
+        ],
+        "env": {
+          "FLASK_APP": "${workspaceFolder}/flask/app.py",          // adjust if your app entry point is different
+          "FLASK_ENV": "development",
+          "MW_SERVICE_NAME": "flask-demo-apps",
+          "PATH": "${workspaceFolder}/flask/flaskenv/bin",
+          "DEBUG_MODE": "1"
+        },
+        "cwd": "${workspaceFolder}/flask", 
+        "console": "integratedTerminal",
+        "justMyCode": false,
+        "python": "${workspaceFolder}/flask/flaskenv/bin/python3",
+        "subProcess": true
+      }
+    ]
+  }
+  

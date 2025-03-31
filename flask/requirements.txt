@@ -1,2 +1,1 @@
-middleware-io>=2.0.0
 flask==2.3.2

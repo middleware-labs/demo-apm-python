@@ -26,10 +26,8 @@ def hello_world():
 
 @app.route('/exception-new')
 def generate_exception():
-    try:
-        sample_function()
-    except Exception as e:
-        another_function(e)
+    print("Exception generated ......")
+    sample_function()
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8010)
