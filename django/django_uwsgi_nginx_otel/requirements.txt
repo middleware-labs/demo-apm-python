@@ -1,0 +1,4 @@
+django
+uwsgi
+opentelemetry-distro
+opentelemetry-exporter-otlp

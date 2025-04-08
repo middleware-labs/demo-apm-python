@@ -1,15 +1,17 @@
 from middleware import mw_tracker, MWOptions
-mw_tracker(
-    MWOptions(
-        access_token="whkvkobudfitutobptgonaezuxpjjypnejbb",
-        target="https://myapp.middleware.io:443",
-        service_name="MyPythonApp",
-    )
-)
+# mw_tracker(
+#     MWOptions(
+#         access_token="whkvkobudfitutobptgonaezuxpjjypnejbb",
+#         target="https://myapp.middleware.io:443",
+#         service_name="MyPythonApp",
+#     )
+# )
 
 from flask import Flask
 
 import logging
+import sys
+from test import sample_function, another_function
 logging.getLogger().setLevel(logging.INFO)
 logging.info("Application initiated successfully.", extra={'Tester': 'Alex'})
 
@@ -22,19 +24,10 @@ def hello_world():
     logging.info("info log sample")
     return 'Hello World!'
 
-@app.route('/exception')
+@app.route('/exception-new')
 def generate_exception():
-    randomList = ['a', 0, 2]
-
-    for entry in randomList:
-        try:
-            print("The entry is", entry)
-            r = 1/int(entry)
-            break
-        except Exception as e:
-            tracker.record_error(e)
-    print("The reciprocal of", entry, "is", r)
-    return 'Exception Generated!'
+    print("Exception generated ......")
+    sample_function()
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8010)
