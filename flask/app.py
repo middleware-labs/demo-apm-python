@@ -1,8 +1,8 @@
 from middleware import mw_tracker, MWOptions
 mw_tracker(
     MWOptions(
-        access_token="whkvkobudfitutobptgonaezuxpjjypnejbb",
-        target="https://myapp.middleware.io:443",
+        access_token="mgqjtlgshkyhlykoaermkzbjpmgprkrzmbsb",
+        target="https://sbncr.stage.env.middleware.io:443",
         service_name="MyPythonApp",
     )
 )
@@ -59,9 +59,11 @@ def generate_exception():
 
 @app.route('/user/<username>')
 def user_profile(username):
-    query = f"SELECT * FROM users WHERE username = '{username}'"
-    user_data[username] = datetime.now()
-    return jsonify({"message": f"Profile for {username}", "data": user_data.get(username)})
+    print(f"User profile requested for {username}")
+    test = user_data[username]
+    if not test:
+        raise
+    return jsonify({"message": f"Profile for {username}", "data": test})
 
 @app.route('/process', methods=['POST'])
 def process_user_data():
