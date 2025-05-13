@@ -1,9 +1,9 @@
 from middleware import mw_tracker, MWOptions
 mw_tracker(
     MWOptions(
-        access_token="whkvkobudfitutobptgonaezuxpjjypnejbb",
-        target="https://myapp.middleware.io:443",
-        service_name="MyPythonApp",
+        access_token="mgqjtlgshkyhlykoaermkzbjpmgprkrzmbsb",
+        target="https://sbncr.stage.env.middleware.io",
+        service_name="flask-app",
     )
 )
 
@@ -35,6 +35,11 @@ def generate_exception():
             tracker.record_error(e)
     print("The reciprocal of", entry, "is", r)
     return 'Exception Generated!'
+
+@app.route('/greeting')
+def greeting():
+    greeting_message = "Hello User, Your request id is" + 5000
+    return greeting_message
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8010)
