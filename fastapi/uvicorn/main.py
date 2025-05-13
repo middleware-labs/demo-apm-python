@@ -1,4 +1,7 @@
 import logging
+from fastapi import FastAPI
+from dotenv import load_dotenv
+import os
 
 from middleware import mw_tracker, MWOptions
 mw_tracker(
@@ -9,32 +12,31 @@ mw_tracker(
     )
 )
 
+# Import routers
+from routers import users, items, orders
 
-from dotenv import load_dotenv
-load_dotenv()
-import os
+app = FastAPI(
+    title="E-commerce API",
+    description="A FastAPI project with intentional bugs for debugging practice",
+    version="1.0.0"
+)
 
-from typing import Union
-
-from fastapi import FastAPI
-
-app = FastAPI()
+# Include routers
+app.include_router(users.router)
+app.include_router(items.router)
+app.include_router(orders.router)
 
 logging.getLogger().setLevel(logging.INFO)
 
 @app.get("/")
 def read_root():
     logging.info("Hello World")
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    logging.debug("Item ID: %s", item_id)
-    return {"item_id": item_id, "q": q}
-
+    return {
+        "message": "Welcome to the E-commerce API",
+        "documentation": "/docs",
+        "version": "1.0.0"
+    }
 
 if __name__ == "__main__":
     import uvicorn
-
     uvicorn.run('main:app', reload=True)

@@ -1,0 +1,19 @@
+[project]
+name = "uvicorn"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Bajrang Ostwal",email = "bajrangostwal1312@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "middleware-io (==v2.2.2rc1)",
+    "fastapi (==0.115.5)",
+    "python-dotenv (==1.0.1)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
