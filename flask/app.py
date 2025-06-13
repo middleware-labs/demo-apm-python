@@ -1,8 +1,8 @@
 from middleware import mw_tracker, MWOptions
 mw_tracker(
     MWOptions(
-        access_token="mgqjtlgshkyhlykoaermkzbjpmgprkrzmbsb",
-        target="https://sbncr.stage.env.middleware.io:443",
+        access_token="whkvkobudfitutobptgonaezuxpjjypnejbb",
+        target="https://myapp.middleware.io:443",
         service_name="MyPythonApp",
     )
 )
