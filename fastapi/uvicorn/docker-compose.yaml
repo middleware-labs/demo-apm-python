@@ -1,0 +1,14 @@
+services:
+  fastapi-uvicorn:
+    image: kevalbhogayata/fastapi-uvicorn-trhealth
+    container_name: fastapi-uvicorn
+    ports:
+      - "8000:8000"
+    environment:
+      - MW_API_KEY=evaddjfmazsdz8qip2cxva99muxv30wq6g6c
+      - MW_TARGET=https://plo4e.middleware.io:443
+      - MW_SERVICE_NAME=fastapi-docker-compose
+      - OTEL_LOG_LEVEL=debug
+      - OTEL_BSP_SCHEDULE_DELAY=10
+      - OTEL_PROPAGATORS=b3
+      - MW_APM_COLLECT_METRICS=false
