@@ -1,0 +1,315 @@
+# API Test Data and Examples
+# Use these examples to test the API endpoints
+
+# ===== USERS ENDPOINTS =====
+
+# 1. Create User
+POST /users/
+Request Body:
+{
+    "id": 4,
+    "username": "alice_johnson",
+    "email": "alice@example.com",
+    "is_active": true
+}
+Expected Response:
+{
+    "id": 4,
+    "username": "alice_johnson",
+    "email": "alice@example.com",
+    "is_active": true,
+    "created_at": "2024-03-21T10:00:00"
+}
+
+# 2. Get User
+GET /users/1
+Expected Response:
+{
+    "id": 1,
+    "username": "john_doe",
+    "email": "john@example.com",
+    "is_active": true,
+    "created_at": "2024-03-21T10:00:00"
+}
+
+# 3. List Users
+GET /users/
+Expected Response:
+[
+    {
+        "id": 1,
+        "username": "john_doe",
+        "email": "john@example.com",
+        "is_active": true,
+        "created_at": "2024-03-21T10:00:00"
+    },
+    {
+        "id": 2,
+        "username": "jane_smith",
+        "email": "jane@example.com",
+        "is_active": true,
+        "created_at": "2024-03-21T10:00:00"
+    },
+    {
+        "id": 3,
+        "username": "bob_wilson",
+        "email": "bob@example.com",
+        "is_active": false,
+        "created_at": "2024-03-21T10:00:00"
+    }
+]
+
+# ===== ITEMS ENDPOINTS =====
+
+# 1. Create Item
+POST /items/
+Request Body:
+{
+    "id": 6,
+    "name": "Gaming Console",
+    "description": "Next-gen gaming console with 4K support",
+    "price": 499.99,
+    "owner_id": 1
+}
+Expected Response:
+{
+    "id": 6,
+    "name": "Gaming Console",
+    "description": "Next-gen gaming console with 4K support",
+    "price": 499.99,
+    "owner_id": 1
+}
+
+# 2. Get Item
+GET /items/1
+Expected Response:
+{
+    "id": 1,
+    "name": "Laptop",
+    "description": "High-performance laptop with 16GB RAM",
+    "price": 999.99,
+    "owner_id": 1
+}
+
+# 3. List Items
+GET /items/
+Expected Response:
+[
+    {
+        "id": 1,
+        "name": "Laptop",
+        "description": "High-performance laptop with 16GB RAM",
+        "price": 999.99,
+        "owner_id": 1
+    },
+    {
+        "id": 2,
+        "name": "Smartphone",
+        "description": "Latest model with 128GB storage",
+        "price": 699.99,
+        "owner_id": 1
+    },
+    {
+        "id": 3,
+        "name": "Headphones",
+        "description": "Noise-cancelling wireless headphones",
+        "price": 199.99,
+        "owner_id": 2
+    },
+    {
+        "id": 4,
+        "name": "Tablet",
+        "description": "10-inch tablet with stylus support",
+        "price": 499.99,
+        "owner_id": 3
+    },
+    {
+        "id": 5,
+        "name": "Smartwatch",
+        "description": "Fitness tracker with heart rate monitor",
+        "price": 299.99,
+        "owner_id": 2
+    }
+]
+
+# 4. Search Items
+GET /items/search/?name=laptop&min_price=500
+Expected Response:
+[
+    {
+        "id": 1,
+        "name": "Laptop",
+        "description": "High-performance laptop with 16GB RAM",
+        "price": 999.99,
+        "owner_id": 1
+    }
+]
+
+# ===== ORDERS ENDPOINTS =====
+
+# 1. Create Order
+POST /orders/
+Request Body:
+{
+    "id": 5,
+    "user_id": 2,
+    "items": [
+        {
+            "id": 3,
+            "name": "Headphones",
+            "price": 199.99,
+            "owner_id": 2
+        },
+        {
+            "id": 5,
+            "name": "Smartwatch",
+            "price": 299.99,
+            "owner_id": 2
+        }
+    ],
+    "total_amount": 499.98,
+    "status": "pending"
+}
+Expected Response:
+{
+    "id": 5,
+    "user_id": 2,
+    "items": [
+        {
+            "id": 3,
+            "name": "Headphones",
+            "price": 199.99,
+            "owner_id": 2
+        },
+        {
+            "id": 5,
+            "name": "Smartwatch",
+            "price": 299.99,
+            "owner_id": 2
+        }
+    ],
+    "total_amount": 549.98,  # Note: This will be 10% higher due to the bug
+    "status": "pending"
+}
+
+# 2. Get Order
+GET /orders/1
+Expected Response:
+{
+    "id": 1,
+    "user_id": 1,
+    "items": [
+        {
+            "id": 1,
+            "name": "Laptop",
+            "price": 999.99,
+            "owner_id": 1
+        },
+        {
+            "id": 2,
+            "name": "Smartphone",
+            "price": 699.99,
+            "owner_id": 1
+        }
+    ],
+    "total_amount": 1699.98,
+    "status": "completed"
+}
+
+# 3. List Orders
+GET /orders/
+Expected Response:
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "items": [...],
+        "total_amount": 1699.98,
+        "status": "completed"
+    }
+]
+
+# 4. Update Order Status
+PUT /orders/2/status
+Request Body:
+{
+    "status": "completed"
+}
+Expected Response:
+{
+    "message": "Order status updated successfully"
+}
+
+# 5. Add Item to Order
+POST /orders/3/items
+Request Body:
+{
+    "id": 4,
+    "name": "Tablet",
+    "price": 499.99,
+    "owner_id": 3
+}
+Expected Response:
+{
+    "message": "Item added to order successfully"
+}
+
+# 6. Get User Orders
+GET /orders/user/1
+Expected Response:
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "items": [...],
+        "total_amount": 1699.98,
+        "status": "completed"
+    },
+    {
+        "id": 3,
+        "user_id": 1,
+        "items": [...],
+        "total_amount": 999.99,
+        "status": "pending"
+    }
+]
+
+# ===== KNOWN BUGS TO TEST =====
+
+1. Users API:
+   - Type error in user ID (string vs integer)
+   - Incorrect error handling in get_user
+   - Infinite recursion in list_users
+   - Race condition in update_user
+   - Type mismatch in delete_user
+
+2. Items API:
+   - Price validation allows negative prices
+   - Type mismatch in get_item
+   - Only returns expensive items in list_items
+   - Race condition in update_item
+   - Incorrect search logic with elif
+
+3. Orders API:
+   - Incorrect total amount calculation (10% added)
+   - Type mismatch in get_order
+   - Only returns completed orders
+   - Incorrect status validation
+   - Missing total amount update after adding items
+   - Type mismatch in user order filtering
+
+# ===== TESTING INSTRUCTIONS =====
+
+1. Start the FastAPI server:
+   uvicorn main:app --reload
+
+2. Access the API documentation:
+   http://localhost:8000/docs
+
+3. Use the examples above to test each endpoint
+
+4. Try to identify and fix the bugs in each endpoint
+
+5. Test edge cases and error conditions
+
+6. Verify the fixes work as expected 
