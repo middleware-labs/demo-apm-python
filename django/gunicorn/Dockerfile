@@ -27,6 +27,8 @@ WORKDIR /usr/src/app/
 COPY --from=builder /reqs /usr/local
 COPY ./ ./
 
+ENV GIT_PYTHON_REFRESH=quiet
+
 RUN python3 manage.py migrate
 RUN python3 manage.py createsuperuser --username admin --email admin@mail.com
 ENV DJANGO_SETTINGS_MODULE="demo.settings"

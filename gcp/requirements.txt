@@ -1,0 +1,4 @@
+middleware-io>=2.4.1
+GitPython
+functions_framework==3.*
+flask==2.3.2
