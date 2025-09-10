@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import traceback
 import logging
+import os
 from functools import wraps 
 from opentelemetry import trace, metrics
 from opentelemetry.trace.status import StatusCode
@@ -118,4 +119,4 @@ def error():
     raise ValueError("Simulated internal server error")
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
