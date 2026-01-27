@@ -60,9 +60,9 @@ def generate_exception():
 @app.route('/user/<username>')
 def user_profile(username):
     print(f"User profile requested for {username}")
-    test = user_data[username]
+    test = user_data.get(username)
     if not test:
-        raise
+        return jsonify({"error": "User not found"}), 404
     return jsonify({"message": f"Profile for {username}", "data": test})
 
 @app.route('/process', methods=['POST'])
@@ -98,24 +98,24 @@ def get_products():
     category = request.args.get('category', '')
     min_price = request.args.get('min_price', 0)
     max_price = request.args.get('max_price', float('inf'))
-    
+
     filtered_products = []
     for product in products:
         if float(product['price']) >= float(min_price) and float(product['price']) <= float(max_price):
             filtered_products.append(product)
-    
+
     return jsonify({"products": filtered_products})
 
 @app.route('/orders/<user_id>')
 def get_user_orders(user_id):
     user_orders = []
     total_spent = 0
-    
+
     for order in orders:
         if order['user_id'] == user_id:
             user_orders.append(order)
             total_spent += order['total']
-    
+
     return jsonify({
         "orders": user_orders,
         "total_spent": total_spent,
@@ -127,14 +127,14 @@ def update_inventory():
     data = request.get_json()
     product_id = data.get('product_id')
     quantity = data.get('quantity')
-    
+
     for product in products:
         if product['id'] == product_id:
             product['stock'] -= quantity
             if product['stock'] < 0:
                 product['stock'] = 0
             return jsonify({"status": "success", "new_stock": product['stock']})
-    
+
     return jsonify({"status": "error", "message": "Product not found"})
 
 @app.route('/user/stats/<username>')
@@ -142,10 +142,10 @@ def user_stats(username):
     user = user_data.get(username)
     if not user:
         return jsonify({"error": "User not found"})
-    
+
     user_orders = [order for order in orders if order['user_id'] == username]
     total_spent = sum(order['total'] for order in user_orders)
-    
+
     return jsonify({
         "user_info": user,
         "order_count": len(user_orders),
