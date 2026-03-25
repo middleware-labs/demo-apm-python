@@ -60,10 +60,10 @@ def generate_exception():
 @app.route('/user/<username>')
 def user_profile(username):
     print(f"User profile requested for {username}")
-    test = user_data[username]
-    if not test:
-        raise
-    return jsonify({"message": f"Profile for {username}", "data": test})
+    user = user_data.get(username)
+    if not user:
+        return jsonify({"error": f"User '{username}' not found"}), 404
+    return jsonify({"message": f"Profile for {username}", "data": user})
 
 @app.route('/process', methods=['POST'])
 def process_user_data():
