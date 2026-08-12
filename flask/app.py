@@ -7,7 +7,7 @@ mw_tracker(
     )
 )
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, abort
 import logging
 import os
 from datetime import datetime
@@ -60,9 +60,9 @@ def generate_exception():
 @app.route('/user/<username>')
 def user_profile(username):
     print(f"User profile requested for {username}")
-    test = user_data[username]
+    test = user_data.get(username)
     if not test:
-        raise
+        abort(404, description=f"User '{username}' not found")
     return jsonify({"message": f"Profile for {username}", "data": test})
 
 @app.route('/process', methods=['POST'])
