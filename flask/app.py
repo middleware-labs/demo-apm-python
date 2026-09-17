@@ -61,7 +61,7 @@ def generate_exception():
 def user_profile(username):
     print(f"User profile requested for {username}")
     test = user_data.get(username)
-    if not test:
+    if test is None:
         abort(404, description=f"User '{username}' not found")
     return jsonify({"message": f"Profile for {username}", "data": test})
 
